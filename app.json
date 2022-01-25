@@ -1,0 +1,1523 @@
+[
+    {
+        "id": "236ec9e0ee3f49fb",
+        "type": "tab",
+        "label": "Main_app",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f4e51f47117a7fb4",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 570,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b951c7f244c3b528",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"GET\";\nmsg.url=\"http://localhost:8083/updateTempDB\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "f4e51f47117a7fb4"
+            ]
+        ]
+    },
+    {
+        "id": "9a692e54c475c185",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "UpdateTempDB",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "b951c7f244c3b528"
+            ]
+        ]
+    },
+    {
+        "id": "30998585e312763e",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 730,
+        "y": 180,
+        "wires": [
+            [
+                "3ec257725b695da3",
+                "94e901706615b28c"
+            ]
+        ]
+    },
+    {
+        "id": "b69d992aa5d008ca",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"GET\";\nmsg.headers = {};\nmsg.headers[\"accept\"]=\"application/json\";\nmsg.url=\"http://localhost:8083/listTemperature\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 180,
+        "wires": [
+            [
+                "30998585e312763e"
+            ]
+        ]
+    },
+    {
+        "id": "f052c0aba7307782",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "GetListTemp",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 420,
+        "y": 180,
+        "wires": [
+            [
+                "b69d992aa5d008ca"
+            ]
+        ]
+    },
+    {
+        "id": "0be49a9420f75169",
+        "type": "ui_table",
+        "z": "236ec9e0ee3f49fb",
+        "group": "0d91eca214794331",
+        "name": "",
+        "order": 1,
+        "width": "10",
+        "height": "10",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1050,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "3ec257725b695da3",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "var data_brut = msg.payload;\nvar temp;\nvar listTempSensor=[];\nvar value=0;\nvar timestamp=0;\n\n\nfor (let i=0; i<data_brut.length; i++){\n    \n    \n    \nvalues=data_brut[i][\"values\"];\n\n    if(values.length>0){\n\n    value=values[values.length-1][\"value\"];\n    timestamp=values[values.length-1][\"timestamp\"];\n}else{\n    value=0;\n    timestamp=0;\n}\n   \n   temp={\"id\":data_brut[i][\"id\"], \"room\":data_brut[i][\"room\"],\n       \"value\":value, \"timestamp\":timestamp\n   };\n   listTempSensor.push(temp);\n}\n\nmsg.payload=listTempSensor;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 260,
+        "wires": [
+            [
+                "0be49a9420f75169",
+                "4357d815818a0469"
+            ]
+        ]
+    },
+    {
+        "id": "626197f9acf7bcdf",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 550,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66c367275a57bd09",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"GET\";\nmsg.url=\"http://localhost:8083/updateWindowDB\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 340,
+        "wires": [
+            [
+                "626197f9acf7bcdf"
+            ]
+        ]
+    },
+    {
+        "id": "af8489f202d71467",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "UpdateTempDB",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "66c367275a57bd09"
+            ]
+        ]
+    },
+    {
+        "id": "feb06db01d32a099",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 650,
+        "y": 440,
+        "wires": [
+            [
+                "635c4ccb544eb6c6",
+                "89370e0980b4075f",
+                "220852d7db6245ec"
+            ]
+        ]
+    },
+    {
+        "id": "7f3e6c29dec62f99",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"GET\";\nmsg.url=\"http://localhost:8083/listWindow\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 440,
+        "wires": [
+            [
+                "feb06db01d32a099"
+            ]
+        ]
+    },
+    {
+        "id": "27007d3d8ebb1a05",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "GetListWindow",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 440,
+        "wires": [
+            [
+                "7f3e6c29dec62f99"
+            ]
+        ]
+    },
+    {
+        "id": "c521b0f77cf2d339",
+        "type": "ui_table",
+        "z": "236ec9e0ee3f49fb",
+        "group": "92dbcd3fa3640124",
+        "name": "",
+        "order": 1,
+        "width": "11",
+        "height": "7",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 930,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "635c4ccb544eb6c6",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "var data_brut = msg.payload;\nvar temp;\nvar listTempSensor=[];\nvar state=0;\nvar timestamp=0;\n\nfor (let i=0; i<data_brut.length; i++){\n    \n    values=data_brut[i][\"states\"];\n    \n    if(values.length>0){\n    state=values[values.length-1][\"state\"];\n    timestamp=values[values.length-1][\"timestamp\"];\n    \n    }else{\n        state=0;\n        timestamp=0;\n    }\n    \n   temp={\"id\":data_brut[i][\"id\"], \"room\":data_brut[i][\"room\"],\n       \"state\":state, \"timestamp\":timestamp\n   };\n   listTempSensor.push(temp);\n}\n\nmsg.payload=listTempSensor;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 520,
+        "wires": [
+            [
+                "c521b0f77cf2d339",
+                "fef0028877207d0f"
+            ]
+        ]
+    },
+    {
+        "id": "94e901706615b28c",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4357d815818a0469",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "b8e82eb4c111bd16",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 530,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2787ceb818adc1f9",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"GET\";\nmsg.url=\"http://localhost:8083/updatePeopleSensorDB\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 640,
+        "wires": [
+            [
+                "b8e82eb4c111bd16"
+            ]
+        ]
+    },
+    {
+        "id": "54d7b96e0e764343",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "UpdatePeopleSensorDB",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 640,
+        "wires": [
+            [
+                "2787ceb818adc1f9"
+            ]
+        ]
+    },
+    {
+        "id": "2fe7c733fed4d245",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 670,
+        "y": 740,
+        "wires": [
+            [
+                "24d3da7d5689969e",
+                "e3bcac12e4be5503"
+            ]
+        ]
+    },
+    {
+        "id": "999a94ad4e85a89c",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"GET\";\nmsg.url=\"http://localhost:8083/listNbrPeopleSensor\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 740,
+        "wires": [
+            [
+                "2fe7c733fed4d245"
+            ]
+        ]
+    },
+    {
+        "id": "9e751b2d5804080c",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "GetListPeopleSensor",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 740,
+        "wires": [
+            [
+                "999a94ad4e85a89c"
+            ]
+        ]
+    },
+    {
+        "id": "2c2b62ccf056fa3b",
+        "type": "ui_table",
+        "z": "236ec9e0ee3f49fb",
+        "group": "3b0a99883169940c",
+        "name": "",
+        "order": 1,
+        "width": "9",
+        "height": "5",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 990,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "24d3da7d5689969e",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "var data_brut = msg.payload;\nvar temp;\nvar listTempSensor=[];\nvar value=0;\nvar timestamp=0;\n\n\nfor (let i=0; i<data_brut.length; i++){\n    \n    \n    \nvalues=data_brut[i][\"values\"];\n\n\n    if(values.length>0){\n    value=values[values.length-1][\"nbrPeople\"];\n    timestamp=values[values.length-1][\"timestamp\"];\n    }\n\n   temp={\"id\":data_brut[i][\"id\"], \"room\":data_brut[i][\"room\"],\n       \"value\":value, \"timestamp\":timestamp\n   };\n   listTempSensor.push(temp);\n}\n\nmsg.payload=listTempSensor;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 820,
+        "wires": [
+            [
+                "2c2b62ccf056fa3b",
+                "62dec5cc9690b267"
+            ]
+        ]
+    },
+    {
+        "id": "e3bcac12e4be5503",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "62dec5cc9690b267",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "695288000636b147",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 610,
+        "y": 980,
+        "wires": [
+            [
+                "6450e8089b2d1b2c"
+            ]
+        ]
+    },
+    {
+        "id": "d4bd42f93fe3a41e",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"POST\";\nmsg.url=\"http://localhost:8083/ManageWindow/22/8/1\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 980,
+        "wires": [
+            [
+                "695288000636b147"
+            ]
+        ]
+    },
+    {
+        "id": "c42b3f02e57bc805",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "ManageWindow",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 980,
+        "wires": [
+            [
+                "d4bd42f93fe3a41e"
+            ]
+        ]
+    },
+    {
+        "id": "6450e8089b2d1b2c",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "89370e0980b4075f",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "fef0028877207d0f",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "395cce8150e73aa4",
+        "type": "ui_button",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "group": "e0c9cc1843ee0aeb",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Update",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 440,
+        "wires": [
+            [
+                "7f3e6c29dec62f99",
+                "b69d992aa5d008ca",
+                "999a94ad4e85a89c"
+            ]
+        ]
+    },
+    {
+        "id": "da8c5d1273a7c898",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 670,
+        "y": 1120,
+        "wires": [
+            [
+                "246bbd8586946316"
+            ]
+        ]
+    },
+    {
+        "id": "a2e34f17ddc318a9",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"POST\";\nmsg.url=\"http://localhost:8083/initOM2M\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 1120,
+        "wires": [
+            [
+                "da8c5d1273a7c898"
+            ]
+        ]
+    },
+    {
+        "id": "0f6e76ee99b4f00b",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "init",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 1120,
+        "wires": [
+            [
+                "a2e34f17ddc318a9"
+            ]
+        ]
+    },
+    {
+        "id": "5b3b079e7e5a4e8a",
+        "type": "ui_button",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "group": "e0c9cc1843ee0aeb",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Initialization",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 1180,
+        "wires": [
+            [
+                "a2e34f17ddc318a9"
+            ]
+        ]
+    },
+    {
+        "id": "246bbd8586946316",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "a1723fe54deed585",
+        "type": "ui_numeric",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "label": "outdoor temp threshold",
+        "tooltip": "",
+        "group": "cc8b491d851f5762",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "outdoorThreshold",
+        "topicType": "str",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "step": 1,
+        "className": "",
+        "x": 310,
+        "y": 1400,
+        "wires": [
+            [
+                "45c1a378178d5825"
+            ]
+        ]
+    },
+    {
+        "id": "734ce46cd36647df",
+        "type": "ui_numeric",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "label": "delta temp threshold",
+        "tooltip": "",
+        "group": "cc8b491d851f5762",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "deltaTemp",
+        "topicType": "str",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "step": 1,
+        "className": "",
+        "x": 300,
+        "y": 1460,
+        "wires": [
+            [
+                "e6f89a11e5849c7d"
+            ]
+        ]
+    },
+    {
+        "id": "ee153ff5073c1ca0",
+        "type": "ui_numeric",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "label": "Nbr people threshold",
+        "tooltip": "",
+        "group": "cc8b491d851f5762",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "nbrPeople",
+        "topicType": "str",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "className": "",
+        "x": 300,
+        "y": 1520,
+        "wires": [
+            [
+                "b2c425192d968914"
+            ]
+        ]
+    },
+    {
+        "id": "e6afc079466cceaf",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "PUT",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 1010,
+        "y": 1460,
+        "wires": [
+            [
+                "ffedcbaa95a04248"
+            ]
+        ]
+    },
+    {
+        "id": "f2809645c39d6450",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "\n\nmsg.method=\"PUT\";\nmsg.url=\"http://localhost:8083/setRules/\"+flow.get(\"nbrPeopleThreshold\").toString()+\"/\"+flow.get(\"outdoorTempThreshold\").toString()+\"/\"+flow.get(\"deltaTempThreshold\").toString()+\"/\"+flow.get(\"autoManagement\").toString();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1460,
+        "wires": [
+            [
+                "e6afc079466cceaf",
+                "a859f37875cee923"
+            ]
+        ]
+    },
+    {
+        "id": "ffedcbaa95a04248",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "5011db99bac48531",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "90e221317a85a3f7",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "flow.set(\"outdoorTempThreshold\",20);\nflow.set(\"deltaTempThreshold\",20);\nflow.set(\"nbrPeopleThreshold\",20);\nflow.set(\"autoManagement\",true);\nflow.set(\"courrentRoom\", -1);\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42490a9dbb58f44e",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 390,
+        "y": 1320,
+        "wires": [
+            [
+                "90e221317a85a3f7"
+            ]
+        ]
+    },
+    {
+        "id": "45c1a378178d5825",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "flow.set(\"outdoorTempThreshold\",msg.payload);\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1400,
+        "wires": [
+            [
+                "f2809645c39d6450"
+            ]
+        ]
+    },
+    {
+        "id": "e6f89a11e5849c7d",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "flow.set(\"deltaTempThreshold\",msg.payload);\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 563,
+        "y": 1458,
+        "wires": [
+            [
+                "f2809645c39d6450"
+            ]
+        ]
+    },
+    {
+        "id": "b2c425192d968914",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "flow.set(\"nbrPeopleThreshold\",msg.payload);\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1520,
+        "wires": [
+            [
+                "f2809645c39d6450"
+            ]
+        ]
+    },
+    {
+        "id": "a859f37875cee923",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "95f7658f01d20663",
+        "type": "ui_switch",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "label": "autoManagement",
+        "tooltip": "",
+        "group": "cc8b491d851f5762",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 300,
+        "y": 1600,
+        "wires": [
+            [
+                "785a8bc93381b4ae",
+                "c1ae32c919e7093d"
+            ]
+        ]
+    },
+    {
+        "id": "785a8bc93381b4ae",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "flow.set(\"autoManagement\",msg.payload);\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1600,
+        "wires": [
+            [
+                "f2809645c39d6450"
+            ]
+        ]
+    },
+    {
+        "id": "c1ae32c919e7093d",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "8413874263855347",
+        "type": "inject",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 90,
+        "y": 1600,
+        "wires": [
+            [
+                "95f7658f01d20663"
+            ]
+        ]
+    },
+    {
+        "id": "16bff041daaf0fb3",
+        "type": "ui_dropdown",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "92dbcd3fa3640124",
+        "order": 3,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "sensor",
+        "topicType": "str",
+        "className": "",
+        "x": 960,
+        "y": 600,
+        "wires": [
+            [
+                "9cd74c2a246657a2"
+            ]
+        ]
+    },
+    {
+        "id": "220852d7db6245ec",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "\nvar data_brut = msg.payload;\nvar listWindow=[];\nvar state=0;\nvar timestamp=0;\nvar sRoom=\"\";\n\n\nfor(let i=0; i<data_brut.length;i++){\n    \n    var temp={};\n    sRoom=data_brut[i][\"room\"].toString();\n\n    temp[\"room \" + sRoom]=data_brut[i][\"room\"];\n    listWindow.push(temp)\n}\n\nmsg.options=listWindow;\nreturn msg;\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 600,
+        "wires": [
+            [
+                "16bff041daaf0fb3",
+                "1c0638905ea229ba"
+            ]
+        ]
+    },
+    {
+        "id": "1c0638905ea229ba",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "options",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "31d5dfe9b577636d",
+        "type": "ui_button",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "group": "92dbcd3fa3640124",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Close",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1290,
+        "y": 680,
+        "wires": [
+            [
+                "d0903a58e27115e5"
+            ]
+        ]
+    },
+    {
+        "id": "50bad72a899c6009",
+        "type": "ui_button",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "group": "92dbcd3fa3640124",
+        "order": 5,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Open",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1290,
+        "y": 580,
+        "wires": [
+            [
+                "d0903a58e27115e5"
+            ]
+        ]
+    },
+    {
+        "id": "9cd74c2a246657a2",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "flow.set(\"currentRoom\", msg.payload)\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d0903a58e27115e5",
+        "type": "function",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "func": "msg.method=\"PUT\";\nmsg.url=\"http://localhost:8083/changeWindowState/\"+(flow.get(\"currentRoom\")).toString()+\"/\"+(msg.payload).toString();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 640,
+        "wires": [
+            [
+                "57309d58ddac23c3",
+                "3326f4ab0527a210"
+            ]
+        ]
+    },
+    {
+        "id": "57309d58ddac23c3",
+        "type": "http request",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 1650,
+        "y": 640,
+        "wires": [
+            [
+                "c25b9ef8d3efd1c9"
+            ]
+        ]
+    },
+    {
+        "id": "3326f4ab0527a210",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "method",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1650,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c25b9ef8d3efd1c9",
+        "type": "debug",
+        "z": "236ec9e0ee3f49fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1690,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "0d91eca214794331",
+        "type": "ui_group",
+        "name": "Temperature Sensor state",
+        "tab": "6b2c92a6f364a908",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "92dbcd3fa3640124",
+        "type": "ui_group",
+        "name": "Windows State",
+        "tab": "6b2c92a6f364a908",
+        "order": 2,
+        "disp": true,
+        "width": "11",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3b0a99883169940c",
+        "type": "ui_group",
+        "name": "People Sensors State",
+        "tab": "6b2c92a6f364a908",
+        "order": 3,
+        "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e0c9cc1843ee0aeb",
+        "type": "ui_group",
+        "name": "Initalization and update",
+        "tab": "6b2c92a6f364a908",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cc8b491d851f5762",
+        "type": "ui_group",
+        "name": "Window Management Rules",
+        "tab": "6b2c92a6f364a908",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6b2c92a6f364a908",
+        "type": "ui_tab",
+        "name": "Microservices",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

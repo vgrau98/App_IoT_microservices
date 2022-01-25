@@ -1,0 +1,3173 @@
+[
+    {
+        "id": "3fc46a05fc6b6ec6",
+        "type": "tab",
+        "label": "sensor_simulator",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8ee039c0e62345c3",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "ff8d0c87c17a6a4f",
+        "appId": "Sensor1",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"Temperature\", \"ID\":10, \"room\":2001}",
+        "x": 350,
+        "y": 20,
+        "wires": [
+            [
+                "d768860611a30c97",
+                "52008a0d6d257143"
+            ]
+        ]
+    },
+    {
+        "id": "a9179a6cd8201a41",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 20,
+        "wires": [
+            [
+                "8ee039c0e62345c3"
+            ]
+        ]
+    },
+    {
+        "id": "d768860611a30c97",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "ff8d0c87c17a6a4f",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 560,
+        "y": 80,
+        "wires": [
+            [
+                "d83d3b2142bb1ec2"
+            ]
+        ]
+    },
+    {
+        "id": "7cd87cac234040dc",
+        "type": "Fake Sensor",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "SensorTemp1",
+        "minValue": "0",
+        "maxValue": "40",
+        "x": 440,
+        "y": 520,
+        "wires": [
+            [
+                "2e1f12ac4918e6eb"
+            ]
+        ]
+    },
+    {
+        "id": "fb19aab385957919",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 520,
+        "wires": [
+            [
+                "7cd87cac234040dc"
+            ]
+        ]
+    },
+    {
+        "id": "fa56473f14ca077e",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp1/DATA",
+        "contentFormat": "application/json",
+        "name": "",
+        "x": 880,
+        "y": 520,
+        "wires": [
+            [
+                "731afc2811a05fdb"
+            ]
+        ]
+    },
+    {
+        "id": "2e1f12ac4918e6eb",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var value=msg.payload\nvar timestamp=Date.now()\n\ncon=\"{\\\"value\\\":\"+value+\", \\\"id\\\":10, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+timestamp+\"}\";\nmsg.payload=con;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 520,
+        "wires": [
+            [
+                "fa56473f14ca077e"
+            ]
+        ]
+    },
+    {
+        "id": "32adf7af8e25e58d",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"ID\\\":10, \\\"room\\\":-1}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 20,
+        "wires": [
+            [
+                "2223053b6f6c5ac5"
+            ]
+        ]
+    },
+    {
+        "id": "2223053b6f6c5ac5",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp1/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 940,
+        "y": 20,
+        "wires": [
+            [
+                "60a084d86f9991d8"
+            ]
+        ]
+    },
+    {
+        "id": "60a084d86f9991d8",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "d83d3b2142bb1ec2",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"value\\\":0, \\\"id\\\":10, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 80,
+        "wires": [
+            [
+                "f09031a01dc62532"
+            ]
+        ]
+    },
+    {
+        "id": "f09031a01dc62532",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp1/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 880,
+        "y": 80,
+        "wires": [
+            [
+                "e3c5ce2aba059b2d"
+            ]
+        ]
+    },
+    {
+        "id": "e3c5ce2aba059b2d",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "717b0df8dc80b4a2",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "cc2e015e38e7f5cc",
+        "appId": "Sensor2",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"Temperature\", \"ID\":15, \"room\":220}",
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "54af089c5f202349",
+                "b99e1f6eece0b02c"
+            ]
+        ]
+    },
+    {
+        "id": "54af089c5f202349",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "cc2e015e38e7f5cc",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 570,
+        "y": 140,
+        "wires": [
+            [
+                "5013bfcdeabfc969"
+            ]
+        ]
+    },
+    {
+        "id": "0ff7631b36efe161",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "717b0df8dc80b4a2"
+            ]
+        ]
+    },
+    {
+        "id": "b99e1f6eece0b02c",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "cc2e015e38e7f5cc",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 540,
+        "y": 200,
+        "wires": [
+            [
+                "a57ea6c201b5d5c0"
+            ]
+        ]
+    },
+    {
+        "id": "5013bfcdeabfc969",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"ID\\\":12, \\\"room\\\":20}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 140,
+        "wires": [
+            [
+                "079cba4442c992c4"
+            ]
+        ]
+    },
+    {
+        "id": "079cba4442c992c4",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp2/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 920,
+        "y": 140,
+        "wires": [
+            [
+                "494829d64b8432f9"
+            ]
+        ]
+    },
+    {
+        "id": "494829d64b8432f9",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "a57ea6c201b5d5c0",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"value\\\":0, \\\"id\\\":12, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 200,
+        "wires": [
+            [
+                "a808f8e5f95b7aab"
+            ]
+        ]
+    },
+    {
+        "id": "a808f8e5f95b7aab",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp2/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 860,
+        "y": 200,
+        "wires": [
+            [
+                "e8cac43a25c65fa0"
+            ]
+        ]
+    },
+    {
+        "id": "e8cac43a25c65fa0",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "74a76d98e72aef33",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "bea1381b60b27af7",
+        "appId": "Sensor3",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"Temperature\", \"ID\":12, \"room\":120}",
+        "x": 290,
+        "y": 260,
+        "wires": [
+            [
+                "93e1127933441c26",
+                "d95498a8c8e9ddbe"
+            ]
+        ]
+    },
+    {
+        "id": "93e1127933441c26",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "bea1381b60b27af7",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "2863ff1182419636"
+            ]
+        ]
+    },
+    {
+        "id": "742b5f06e930de9a",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "74a76d98e72aef33"
+            ]
+        ]
+    },
+    {
+        "id": "d95498a8c8e9ddbe",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "bea1381b60b27af7",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "e4a9bbe7255a11e8"
+            ]
+        ]
+    },
+    {
+        "id": "2863ff1182419636",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 14;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":21}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 260,
+        "wires": [
+            [
+                "c3c8716937f45bb1"
+            ]
+        ]
+    },
+    {
+        "id": "c3c8716937f45bb1",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp3/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 880,
+        "y": 260,
+        "wires": [
+            [
+                "5eb5319d34dba25f"
+            ]
+        ]
+    },
+    {
+        "id": "5eb5319d34dba25f",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e4a9bbe7255a11e8",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"value\\\":0, \\\"id\\\":14, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 300,
+        "wires": [
+            [
+                "beb19dc02b393fed"
+            ]
+        ]
+    },
+    {
+        "id": "beb19dc02b393fed",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp3/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 790,
+        "y": 300,
+        "wires": [
+            [
+                "16b250133cf8597f"
+            ]
+        ]
+    },
+    {
+        "id": "16b250133cf8597f",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "8a80f0ce8e1f05d8",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "1cf3edfb99a6c0db",
+        "appId": "Window1",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"Window\", \"ID\":24, \"room\":2001}",
+        "x": 370,
+        "y": 1820,
+        "wires": [
+            [
+                "60c1c4dfee08a650",
+                "f2aa905b1fa067e8"
+            ]
+        ]
+    },
+    {
+        "id": "60c1c4dfee08a650",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "1cf3edfb99a6c0db",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 610,
+        "y": 1820,
+        "wires": [
+            [
+                "43cbca3305fba3e5"
+            ]
+        ]
+    },
+    {
+        "id": "099b38dbf799b136",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 1820,
+        "wires": [
+            [
+                "8a80f0ce8e1f05d8"
+            ]
+        ]
+    },
+    {
+        "id": "f2aa905b1fa067e8",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "1cf3edfb99a6c0db",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 580,
+        "y": 1880,
+        "wires": [
+            [
+                "c22515728b05dcec"
+            ]
+        ]
+    },
+    {
+        "id": "43cbca3305fba3e5",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 45;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":20}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 1820,
+        "wires": [
+            [
+                "25b4e313e978b8bc"
+            ]
+        ]
+    },
+    {
+        "id": "25b4e313e978b8bc",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/Window1/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 960,
+        "y": 1820,
+        "wires": [
+            [
+                "9248a1ae11a6ec0a"
+            ]
+        ]
+    },
+    {
+        "id": "9248a1ae11a6ec0a",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "c22515728b05dcec",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"state\\\":false, \\\"id\\\":45, \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 1880,
+        "wires": [
+            [
+                "795ab4e00c9178a4"
+            ]
+        ]
+    },
+    {
+        "id": "795ab4e00c9178a4",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/Window1/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 900,
+        "y": 1880,
+        "wires": [
+            [
+                "d44e5860a3f27674"
+            ]
+        ]
+    },
+    {
+        "id": "d44e5860a3f27674",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "731afc2811a05fdb",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "c2c70670b969da46",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "47e0ba46dca40f26",
+        "appId": "SensorPeople1",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"People\", \"ID\":56, \"room\":2001}",
+        "x": 330,
+        "y": 960,
+        "wires": [
+            [
+                "f629a4e808e38caa",
+                "0642f8e09e137bdb"
+            ]
+        ]
+    },
+    {
+        "id": "f629a4e808e38caa",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "47e0ba46dca40f26",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 570,
+        "y": 960,
+        "wires": [
+            [
+                "33eef11bbc15ef93"
+            ]
+        ]
+    },
+    {
+        "id": "16e108a298952040",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 960,
+        "wires": [
+            [
+                "c2c70670b969da46"
+            ]
+        ]
+    },
+    {
+        "id": "0642f8e09e137bdb",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "47e0ba46dca40f26",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 540,
+        "y": 1020,
+        "wires": [
+            [
+                "4902de83c3adf7f0"
+            ]
+        ]
+    },
+    {
+        "id": "33eef11bbc15ef93",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 5;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":20}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 960,
+        "wires": [
+            [
+                "f8387e74d22f87e3"
+            ]
+        ]
+    },
+    {
+        "id": "f8387e74d22f87e3",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 920,
+        "y": 960,
+        "wires": [
+            [
+                "be12ec1a959ca382"
+            ]
+        ]
+    },
+    {
+        "id": "be12ec1a959ca382",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "4902de83c3adf7f0",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"nbrPeople\\\":0, \\\"id\\\":5, \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 1020,
+        "wires": [
+            [
+                "0a35d5af4523cd88"
+            ]
+        ]
+    },
+    {
+        "id": "0a35d5af4523cd88",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 860,
+        "y": 1020,
+        "wires": [
+            [
+                "93f6cb6a36d78f45"
+            ]
+        ]
+    },
+    {
+        "id": "93f6cb6a36d78f45",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "112449b7f3cffb37",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "9f96091297aeda5b",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "8ee039c0e62345c3"
+            ]
+        ]
+    },
+    {
+        "id": "660ed26e15b754b5",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "3d466b65f4d3e4e4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "717b0df8dc80b4a2"
+            ]
+        ]
+    },
+    {
+        "id": "e3d187760ad6172b",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "4963c2d44680b4c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 80,
+        "y": 300,
+        "wires": [
+            [
+                "74a76d98e72aef33"
+            ]
+        ]
+    },
+    {
+        "id": "2b87505d2a3d0586",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "7e04f36d1ecca658",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 150,
+        "y": 1880,
+        "wires": [
+            [
+                "8a80f0ce8e1f05d8"
+            ]
+        ]
+    },
+    {
+        "id": "51a750d4c1a97807",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "fac2ba7255867698",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 1000,
+        "wires": [
+            [
+                "c2c70670b969da46"
+            ]
+        ]
+    },
+    {
+        "id": "47b2bf55547523b7",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "9f96091297aeda5b",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Generate value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 280,
+        "y": 580,
+        "wires": [
+            [
+                "7cd87cac234040dc"
+            ]
+        ]
+    },
+    {
+        "id": "8f7ef1b7ca462189",
+        "type": "Fake Sensor",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "SensorTemp1",
+        "minValue": "0",
+        "maxValue": "40",
+        "x": 400,
+        "y": 640,
+        "wires": [
+            [
+                "659beb01df95687c"
+            ]
+        ]
+    },
+    {
+        "id": "9ab4b5d3015aff7a",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 640,
+        "wires": [
+            [
+                "8f7ef1b7ca462189"
+            ]
+        ]
+    },
+    {
+        "id": "f62594242e7f674a",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp2/DATA",
+        "contentFormat": "application/json",
+        "name": "",
+        "x": 840,
+        "y": 640,
+        "wires": [
+            [
+                "1f72c29d1de74dc4"
+            ]
+        ]
+    },
+    {
+        "id": "659beb01df95687c",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var value=msg.payload\nvar timestamp=Date.now()\n\ncon=\"{\\\"value\\\":\"+value+\",\\\"id\\\":20, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+timestamp+\"}\";\nmsg.payload=con;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 640,
+        "wires": [
+            [
+                "f62594242e7f674a"
+            ]
+        ]
+    },
+    {
+        "id": "1f72c29d1de74dc4",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "c7ee9ad9b0555f5c",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "3d466b65f4d3e4e4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Generate value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 240,
+        "y": 700,
+        "wires": [
+            [
+                "8f7ef1b7ca462189"
+            ]
+        ]
+    },
+    {
+        "id": "d1293b1430e86b96",
+        "type": "Fake Sensor",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "SensorTemp1",
+        "minValue": "0",
+        "maxValue": "40",
+        "x": 340,
+        "y": 780,
+        "wires": [
+            [
+                "d84342a612ce13e4"
+            ]
+        ]
+    },
+    {
+        "id": "7ed70d7a81ea60f0",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 780,
+        "wires": [
+            [
+                "d1293b1430e86b96"
+            ]
+        ]
+    },
+    {
+        "id": "a7645adfb8d66814",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemp3/DATA",
+        "contentFormat": "application/json",
+        "name": "",
+        "x": 780,
+        "y": 780,
+        "wires": [
+            [
+                "1e1c59305c60e75f"
+            ]
+        ]
+    },
+    {
+        "id": "d84342a612ce13e4",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var value=msg.payload\nvar timestamp=Date.now()\n\ncon=\"{\\\"value\\\":\"+value+\", \\\"id\\\":14, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+timestamp+\"}\";\nmsg.payload=con;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 780,
+        "wires": [
+            [
+                "a7645adfb8d66814"
+            ]
+        ]
+    },
+    {
+        "id": "1e1c59305c60e75f",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "1e89156381bb4c9f",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "4963c2d44680b4c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Generate value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 180,
+        "y": 840,
+        "wires": [
+            [
+                "d1293b1430e86b96"
+            ]
+        ]
+    },
+    {
+        "id": "43e5ad9992f0e6f4",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "1a77d787e77ea5c4",
+        "appId": "SensorPeople2",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"People\", \"ID\":17, \"room\":220}",
+        "x": 310,
+        "y": 1080,
+        "wires": [
+            [
+                "6da99a1c4a714da7",
+                "ab2cf77a17f9713c"
+            ]
+        ]
+    },
+    {
+        "id": "6da99a1c4a714da7",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "1a77d787e77ea5c4",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 550,
+        "y": 1080,
+        "wires": [
+            [
+                "ff0f58eb36249f31"
+            ]
+        ]
+    },
+    {
+        "id": "17baee4a5cd993af",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1080,
+        "wires": [
+            [
+                "43e5ad9992f0e6f4"
+            ]
+        ]
+    },
+    {
+        "id": "ab2cf77a17f9713c",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "1a77d787e77ea5c4",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 520,
+        "y": 1140,
+        "wires": [
+            [
+                "5d639aa91659978a"
+            ]
+        ]
+    },
+    {
+        "id": "ff0f58eb36249f31",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 7;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":21}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 1080,
+        "wires": [
+            [
+                "7070c71e8b37d1f5"
+            ]
+        ]
+    },
+    {
+        "id": "7070c71e8b37d1f5",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor2/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 900,
+        "y": 1080,
+        "wires": [
+            [
+                "574cd4ae6778124f"
+            ]
+        ]
+    },
+    {
+        "id": "574cd4ae6778124f",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "5d639aa91659978a",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"nbrPeople\\\":0, \\\"id\\\":7, \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 1140,
+        "wires": [
+            [
+                "162d1a0273c1530b"
+            ]
+        ]
+    },
+    {
+        "id": "162d1a0273c1530b",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor2/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 840,
+        "y": 1140,
+        "wires": [
+            [
+                "9302ff453879dadf"
+            ]
+        ]
+    },
+    {
+        "id": "9302ff453879dadf",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "7a051f8d92e00d1a",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "4c7b48a6fdf67030",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 1120,
+        "wires": [
+            [
+                "43e5ad9992f0e6f4"
+            ]
+        ]
+    },
+    {
+        "id": "bd05dbdff0190cdb",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "56c1cb9212fe7b8d",
+        "appId": "SensorPeople3",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"People\", \"ID\":108, \"room\":120}",
+        "x": 310,
+        "y": 1200,
+        "wires": [
+            [
+                "1e86ff6ca28446a5",
+                "62b770c4b9c29644"
+            ]
+        ]
+    },
+    {
+        "id": "1e86ff6ca28446a5",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "56c1cb9212fe7b8d",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 550,
+        "y": 1200,
+        "wires": [
+            [
+                "c289836d47f80db7"
+            ]
+        ]
+    },
+    {
+        "id": "a0814069b4347f56",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1200,
+        "wires": [
+            [
+                "bd05dbdff0190cdb"
+            ]
+        ]
+    },
+    {
+        "id": "62b770c4b9c29644",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "56c1cb9212fe7b8d",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 520,
+        "y": 1260,
+        "wires": [
+            [
+                "753012819e643460"
+            ]
+        ]
+    },
+    {
+        "id": "c289836d47f80db7",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 12;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":22}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 1200,
+        "wires": [
+            [
+                "3e88eed39ec5b5ae"
+            ]
+        ]
+    },
+    {
+        "id": "3e88eed39ec5b5ae",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor3/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 900,
+        "y": 1200,
+        "wires": [
+            [
+                "60c0aa3614b2be8b"
+            ]
+        ]
+    },
+    {
+        "id": "60c0aa3614b2be8b",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "753012819e643460",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"nbrPeople\\\":0, \\\"id\\\":12, \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 1260,
+        "wires": [
+            [
+                "7474893945bf140f"
+            ]
+        ]
+    },
+    {
+        "id": "7474893945bf140f",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor3/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 840,
+        "y": 1260,
+        "wires": [
+            [
+                "ac181b5f43b7ea12"
+            ]
+        ]
+    },
+    {
+        "id": "ac181b5f43b7ea12",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "248fa537412bdb18",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "a984cdffb239d9c9",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 1240,
+        "wires": [
+            [
+                "bd05dbdff0190cdb"
+            ]
+        ]
+    },
+    {
+        "id": "138ff267dd569ab4",
+        "type": "Fake Sensor",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "SensorPeople1",
+        "minValue": "0",
+        "maxValue": "50",
+        "x": 320,
+        "y": 1340,
+        "wires": [
+            [
+                "6b9090a77745a063"
+            ]
+        ]
+    },
+    {
+        "id": "8554ded69e7eeed3",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 1340,
+        "wires": [
+            [
+                "138ff267dd569ab4"
+            ]
+        ]
+    },
+    {
+        "id": "5b1027602527aa39",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor/DATA",
+        "contentFormat": "application/json",
+        "name": "",
+        "x": 760,
+        "y": 1340,
+        "wires": [
+            [
+                "f357a3f6c4c1dd6b"
+            ]
+        ]
+    },
+    {
+        "id": "6b9090a77745a063",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var value=Math.round(msg.payload);\nvar timestamp=Date.now();\n\ncon=\"{\\\"nbrPeople\\\":\"+value+\", \\\"id\\\":5, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+timestamp+\"}\";\nmsg.payload=con;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1340,
+        "wires": [
+            [
+                "5b1027602527aa39"
+            ]
+        ]
+    },
+    {
+        "id": "f357a3f6c4c1dd6b",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "7f54b6ec89351228",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "fac2ba7255867698",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Generate value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 1400,
+        "wires": [
+            [
+                "138ff267dd569ab4"
+            ]
+        ]
+    },
+    {
+        "id": "2653b2bb3e1ddbe0",
+        "type": "Fake Sensor",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "SensorPeople2",
+        "minValue": "0",
+        "maxValue": "50",
+        "x": 340,
+        "y": 1460,
+        "wires": [
+            [
+                "e61d62ac24b2938d"
+            ]
+        ]
+    },
+    {
+        "id": "e636192870a3666e",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 1460,
+        "wires": [
+            [
+                "2653b2bb3e1ddbe0"
+            ]
+        ]
+    },
+    {
+        "id": "0ffda8864763ab1b",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor2/DATA",
+        "contentFormat": "application/json",
+        "name": "",
+        "x": 780,
+        "y": 1460,
+        "wires": [
+            [
+                "c6413334bd50e076"
+            ]
+        ]
+    },
+    {
+        "id": "e61d62ac24b2938d",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var value=Math.round(msg.payload);\nvar timestamp=Date.now();\n\ncon=\"{\\\"nbrPeople\\\":\"+value+\", \\\"id\\\":7, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+timestamp+\"}\";\nmsg.payload=con;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1460,
+        "wires": [
+            [
+                "0ffda8864763ab1b"
+            ]
+        ]
+    },
+    {
+        "id": "c6413334bd50e076",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "7ac91dca7491dec3",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "4c7b48a6fdf67030",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Generate value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 180,
+        "y": 1520,
+        "wires": [
+            [
+                "2653b2bb3e1ddbe0"
+            ]
+        ]
+    },
+    {
+        "id": "2d5afed6366245e9",
+        "type": "Fake Sensor",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "SensorPeople3",
+        "minValue": "0",
+        "maxValue": "50",
+        "x": 320,
+        "y": 1580,
+        "wires": [
+            [
+                "8ff3a356af33fe5a"
+            ]
+        ]
+    },
+    {
+        "id": "b40b1f463da479f2",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 1580,
+        "wires": [
+            [
+                "2d5afed6366245e9"
+            ]
+        ]
+    },
+    {
+        "id": "48bbb195e9389baf",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/PeopleSensor3/DATA",
+        "contentFormat": "application/json",
+        "name": "",
+        "x": 760,
+        "y": 1580,
+        "wires": [
+            [
+                "6309b2ef10c4685b"
+            ]
+        ]
+    },
+    {
+        "id": "8ff3a356af33fe5a",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var value=Math.round(msg.payload);\nvar timestamp=Date.now();\n\ncon=\"{\\\"nbrPeople\\\":\"+value+\", \\\"id\\\":12, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+timestamp+\"}\";\nmsg.payload=con;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1580,
+        "wires": [
+            [
+                "48bbb195e9389baf"
+            ]
+        ]
+    },
+    {
+        "id": "6309b2ef10c4685b",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "f5023772ed0feca1",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "a984cdffb239d9c9",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Generate value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 1640,
+        "wires": [
+            [
+                "2d5afed6366245e9"
+            ]
+        ]
+    },
+    {
+        "id": "0ed4422f29b94fa5",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "534707d6c8e6573b",
+        "appId": "Window2",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"Window\", \"ID\":8, \"room\":220}",
+        "x": 330,
+        "y": 1960,
+        "wires": [
+            [
+                "39d10a0cd091c925",
+                "7ffc95492b197ab2"
+            ]
+        ]
+    },
+    {
+        "id": "39d10a0cd091c925",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "534707d6c8e6573b",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 570,
+        "y": 1960,
+        "wires": [
+            [
+                "2905b062754b433c"
+            ]
+        ]
+    },
+    {
+        "id": "a68ac6ae33d72db0",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 1960,
+        "wires": [
+            [
+                "0ed4422f29b94fa5"
+            ]
+        ]
+    },
+    {
+        "id": "7ffc95492b197ab2",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "534707d6c8e6573b",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 540,
+        "y": 2020,
+        "wires": [
+            [
+                "ab0c55f95d7e1620"
+            ]
+        ]
+    },
+    {
+        "id": "2905b062754b433c",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 70;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":21}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1960,
+        "wires": [
+            [
+                "746d0adb17f96590"
+            ]
+        ]
+    },
+    {
+        "id": "746d0adb17f96590",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/Window2/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 920,
+        "y": 1960,
+        "wires": [
+            [
+                "e6e032c8bea27209"
+            ]
+        ]
+    },
+    {
+        "id": "e6e032c8bea27209",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "ab0c55f95d7e1620",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "con=\"{\\\"state\\\":false,\\\"id\\\":70, \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 2020,
+        "wires": [
+            [
+                "5011125f00ffa1b3"
+            ]
+        ]
+    },
+    {
+        "id": "5011125f00ffa1b3",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/Window2/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 860,
+        "y": 2020,
+        "wires": [
+            [
+                "2d651c6061579013"
+            ]
+        ]
+    },
+    {
+        "id": "2d651c6061579013",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 2020,
+        "wires": []
+    },
+    {
+        "id": "bec9c828fbc06a9c",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "d1981e200c766cd8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 2020,
+        "wires": [
+            [
+                "0ed4422f29b94fa5"
+            ]
+        ]
+    },
+    {
+        "id": "f42b49a404b8f15c",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "d40f38de796e7188",
+        "appId": "Window3",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"Window\", \"ID\":6, \"room\":120}",
+        "x": 350,
+        "y": 2100,
+        "wires": [
+            [
+                "5f2dead6b4491491",
+                "a735376ee4c51edf"
+            ]
+        ]
+    },
+    {
+        "id": "5f2dead6b4491491",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "d40f38de796e7188",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 590,
+        "y": 2100,
+        "wires": [
+            [
+                "2225625ab143b24a"
+            ]
+        ]
+    },
+    {
+        "id": "5d145a7afe86c6db",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 2100,
+        "wires": [
+            [
+                "f42b49a404b8f15c"
+            ]
+        ]
+    },
+    {
+        "id": "a735376ee4c51edf",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "d40f38de796e7188",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 560,
+        "y": 2160,
+        "wires": [
+            [
+                "776eece91b241370"
+            ]
+        ]
+    },
+    {
+        "id": "2225625ab143b24a",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 3;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":22}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 2100,
+        "wires": [
+            [
+                "94c96c2844f3a596"
+            ]
+        ]
+    },
+    {
+        "id": "94c96c2844f3a596",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/Window3/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 940,
+        "y": 2100,
+        "wires": [
+            [
+                "4e82804ccaf65877"
+            ]
+        ]
+    },
+    {
+        "id": "4e82804ccaf65877",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "776eece91b241370",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "con=\"{\\\"state\\\":false, \\\"id\\\":3, \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 2160,
+        "wires": [
+            [
+                "4d1c47e2c747bd9c"
+            ]
+        ]
+    },
+    {
+        "id": "4d1c47e2c747bd9c",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/Window3/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 880,
+        "y": 2160,
+        "wires": [
+            [
+                "b95c8d13729f31dc"
+            ]
+        ]
+    },
+    {
+        "id": "b95c8d13729f31dc",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 2160,
+        "wires": []
+    },
+    {
+        "id": "4881b6bf7574cb6f",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "f3531517a6fd2fe2",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 2160,
+        "wires": [
+            [
+                "f42b49a404b8f15c"
+            ]
+        ]
+    },
+    {
+        "id": "fe50a67c1f4caa26",
+        "type": "Application Entity",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "48fe85e3d198ab2b",
+        "appId": "Sensor4",
+        "pointOfAccess": "http://localhost:8082",
+        "labels": "{\"RessourceType\":\"Temperature\", \"ID\":1, \"room\":-1}",
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "fefdecd72f6bad3a",
+                "d3691611826e2b37"
+            ]
+        ]
+    },
+    {
+        "id": "fefdecd72f6bad3a",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "48fe85e3d198ab2b",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 510,
+        "y": 360,
+        "wires": [
+            [
+                "154747ad89b66fef"
+            ]
+        ]
+    },
+    {
+        "id": "204a51a54cd5eeb5",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 360,
+        "wires": [
+            [
+                "fe50a67c1f4caa26"
+            ]
+        ]
+    },
+    {
+        "id": "d3691611826e2b37",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "48fe85e3d198ab2b",
+        "acpConfig": "",
+        "cntName": "DATA",
+        "mni": "10000",
+        "x": 480,
+        "y": 420,
+        "wires": [
+            [
+                "c65dc72192207397"
+            ]
+        ]
+    },
+    {
+        "id": "154747ad89b66fef",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var max =1000;\nvar id = 30;\n\n\ncon=\"{\\\"ID\\\":\"+id+\", \\\"room\\\":22}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 360,
+        "wires": [
+            [
+                "1fea4180738083e7"
+            ]
+        ]
+    },
+    {
+        "id": "1fea4180738083e7",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemperature4/DESCRIPTOR",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 860,
+        "y": 360,
+        "wires": [
+            [
+                "1e006fe6e732ec3e"
+            ]
+        ]
+    },
+    {
+        "id": "1e006fe6e732ec3e",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "c65dc72192207397",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "\ncon=\"{\\\"value\\\":0, \\\"value\\\":30, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+Date.now()+\"}\";\nmsg.payload=con;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 420,
+        "wires": [
+            [
+                "ac7ea124728c8e35"
+            ]
+        ]
+    },
+    {
+        "id": "ac7ea124728c8e35",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemperature4/DATA",
+        "contentFormat": "application/json",
+        "name": "desc_content",
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "bdc46d0cb1bbafe8"
+            ]
+        ]
+    },
+    {
+        "id": "bdc46d0cb1bbafe8",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "85444658f96f1e51",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "9aa72bba87fae3fc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Create ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 60,
+        "y": 400,
+        "wires": [
+            [
+                "fe50a67c1f4caa26"
+            ]
+        ]
+    },
+    {
+        "id": "3a60e2b2f34bc574",
+        "type": "Fake Sensor",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "SensorTemp1",
+        "minValue": "0",
+        "maxValue": "40",
+        "x": 560,
+        "y": 860,
+        "wires": [
+            [
+                "6c12360e72aeb2d0"
+            ]
+        ]
+    },
+    {
+        "id": "29dd71296cbed46e",
+        "type": "inject",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 860,
+        "wires": [
+            [
+                "3a60e2b2f34bc574"
+            ]
+        ]
+    },
+    {
+        "id": "222084426504fe53",
+        "type": "Content Instance",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "parentUri": "/in-cse/in-name/SensorTemperature4/DATA",
+        "contentFormat": "application/json",
+        "name": "",
+        "x": 1000,
+        "y": 860,
+        "wires": [
+            [
+                "79fac3e796ad4791"
+            ]
+        ]
+    },
+    {
+        "id": "6c12360e72aeb2d0",
+        "type": "function",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "func": "var value=msg.payload\nvar timestamp=Date.now()\n\ncon=\"{\\\"value\\\":\"+value+\", \\\"id\\\":30, \\\"unit\\\":\\\"°C\\\", \\\"timestamp\\\":\"+timestamp+\"}\";\nmsg.payload=con;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 860,
+        "wires": [
+            [
+                "222084426504fe53"
+            ]
+        ]
+    },
+    {
+        "id": "79fac3e796ad4791",
+        "type": "debug",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "8e75527ebf8ea6de",
+        "type": "ui_button",
+        "z": "3fc46a05fc6b6ec6",
+        "name": "",
+        "group": "9aa72bba87fae3fc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Generate value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 400,
+        "y": 920,
+        "wires": [
+            [
+                "3a60e2b2f34bc574"
+            ]
+        ]
+    },
+    {
+        "id": "52008a0d6d257143",
+        "type": "Container Node",
+        "z": "3fc46a05fc6b6ec6",
+        "cseConfig": "5e631c7b302b90aa",
+        "aeConfig": "ff8d0c87c17a6a4f",
+        "acpConfig": "",
+        "cntName": "DESCRIPTOR",
+        "mni": "100000",
+        "x": 590,
+        "y": 20,
+        "wires": [
+            [
+                "32adf7af8e25e58d"
+            ]
+        ]
+    },
+    {
+        "id": "5e631c7b302b90aa",
+        "type": "CSE_CONFIG",
+        "cse": "IN",
+        "poa": "http://localhost:8082",
+        "cseId": "in-cse",
+        "cseName": "in-name",
+        "adminOriginator": "873100fa3fd5814d"
+    },
+    {
+        "id": "ff8d0c87c17a6a4f",
+        "type": "AE_CONFIG",
+        "aeName": "SensorTemp1"
+    },
+    {
+        "id": "cc2e015e38e7f5cc",
+        "type": "AE_CONFIG",
+        "aeName": "SensorTemp2"
+    },
+    {
+        "id": "bea1381b60b27af7",
+        "type": "AE_CONFIG",
+        "aeName": "SensorTemp3"
+    },
+    {
+        "id": "1cf3edfb99a6c0db",
+        "type": "AE_CONFIG",
+        "aeName": "Window1"
+    },
+    {
+        "id": "47e0ba46dca40f26",
+        "type": "AE_CONFIG",
+        "aeName": "PeopleSensor"
+    },
+    {
+        "id": "9f96091297aeda5b",
+        "type": "ui_group",
+        "name": "Sensor Temperature 1",
+        "tab": "0e1e890ba37ee800",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3d466b65f4d3e4e4",
+        "type": "ui_group",
+        "name": "Sensor Temperature 2",
+        "tab": "0e1e890ba37ee800",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4963c2d44680b4c8",
+        "type": "ui_group",
+        "name": "Sensor Temperature 3",
+        "tab": "0e1e890ba37ee800",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7e04f36d1ecca658",
+        "type": "ui_group",
+        "name": "Window actuator 1",
+        "tab": "0e1e890ba37ee800",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "fac2ba7255867698",
+        "type": "ui_group",
+        "name": "People Sensor 1",
+        "tab": "0e1e890ba37ee800",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1a77d787e77ea5c4",
+        "type": "AE_CONFIG",
+        "aeName": "PeopleSensor2"
+    },
+    {
+        "id": "4c7b48a6fdf67030",
+        "type": "ui_group",
+        "name": "People Sensor 2",
+        "tab": "0e1e890ba37ee800",
+        "order": 6,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "56c1cb9212fe7b8d",
+        "type": "AE_CONFIG",
+        "aeName": "PeopleSensor3"
+    },
+    {
+        "id": "a984cdffb239d9c9",
+        "type": "ui_group",
+        "name": "People Sensor 3",
+        "tab": "0e1e890ba37ee800",
+        "order": 7,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "534707d6c8e6573b",
+        "type": "AE_CONFIG",
+        "aeName": "Window2"
+    },
+    {
+        "id": "d1981e200c766cd8",
+        "type": "ui_group",
+        "name": "Window actuator 2",
+        "tab": "0e1e890ba37ee800",
+        "order": 8,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d40f38de796e7188",
+        "type": "AE_CONFIG",
+        "aeName": "Window3"
+    },
+    {
+        "id": "f3531517a6fd2fe2",
+        "type": "ui_group",
+        "name": "Window actuator 3",
+        "tab": "0e1e890ba37ee800",
+        "order": 9,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "48fe85e3d198ab2b",
+        "type": "AE_CONFIG",
+        "aeName": "SensorTemperature4"
+    },
+    {
+        "id": "9aa72bba87fae3fc",
+        "type": "ui_group",
+        "name": "Sensor Temperature 4",
+        "tab": "0e1e890ba37ee800",
+        "order": 10,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "873100fa3fd5814d",
+        "type": "ORIGINATOR_CONFIG",
+        "originatorName": "admin",
+        "originator": "admin:admin"
+    },
+    {
+        "id": "0e1e890ba37ee800",
+        "type": "ui_tab",
+        "name": "Sensors Simulator",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
